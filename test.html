@@ -1,1 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripAdvisor Restaurant Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #00aa6c;
+            text-align: center;
+        }
+        .search-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .restaurant-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .restaurant-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .restaurant-card h3 {
+            margin-top: 0;
+            color: #00aa6c;
+        }
+        .restaurant-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .rating {
+            color: #FFA500;
+            font-weight: bold;
+        }
+        .price {
+            color: #00aa6c;
+        }
+        .cuisine {
+            font-style: italic;
+        }
+        button {
+            background-color: #00aa6c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #008c58;
+        }
+        .loading {
+            text-align: center;
+            font-size: 18px;
+            padding: 20px;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TripAdvisor Restaurant Finder</h1>
+    
+    <div class="search-container">
+        <label for="locationId">Location ID:</label>
+        <input type="text" id="locationId" value="304554" placeholder="Enter TripAdvisor Location ID">
+        <button onclick="fetchRestaurants()">Search Restaurants</button>
+    </div>
+    
+    <div id="loading" class="loading" style="display: none;">Loading restaurants...</div>
+    <div id="error" class="error" style="display: none;"></div>
+    
+    <div id="restaurants" class="restaurant-container"></div>
 
+    <script>
+        async function fetchRestaurants() {
+            const locationId = document.getElementById('locationId').value;
+            const restaurantsContainer = document.getElementById('restaurants');
+            const loadingElement = document.getElementById('loading');
+            const errorElement = document.getElementById('error');
+            
+            // Clear previous results and show loading
+            restaurantsContainer.innerHTML = '';
+            errorElement.style.display = 'none';
+            loadingElement.style.display = 'block';
+            
+            const url = `https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/searchRestaurants?locationId=${locationId}`;
+            const options = {
+                method: 'GET',
+                headers: {
+                    'x-rapidapi-key': '4b34154c75msha7b904a0e8c010dp12510djsn96d217884c5d',
+                    'x-rapidapi-host': 'tripadvisor16.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+                
+                const result = await response.json();
+                loadingElement.style.display = 'none';
+                
+                if (result.data && result.data.data && result.data.data.length > 0) {
+                    displayRestaurants(result.data.data);
+                } else {
+                    restaurantsContainer.innerHTML = '<p>No restaurants found for this location.</p>';
+                }
+            } catch (error) {
+                loadingElement.style.display = 'none';
+                errorElement.textContent = `Error: ${error.message}`;
+                errorElement.style.display = 'block';
+                console.error(error);
+            }
+        }
+
+        function displayRestaurants(restaurants) {
+            const container = document.getElementById('restaurants');
+            
+            restaurants.forEach(restaurant => {
+                const card = document.createElement('div');
+                card.className = 'restaurant-card';
+                
+                let imageHtml = '';
+                if (restaurant.thumbnail) {
+                    imageHtml = `<img src="${restaurant.thumbnail}" alt="${restaurant.name}" class="restaurant-image">`;
+                }
+                
+                let ratingHtml = '';
+                if (restaurant.averageRating) {
+                    ratingHtml = `<p class="rating">Rating: ${restaurant.averageRating} (${restaurant.userReviewCount} reviews)</p>`;
+                }
+                
+                let priceHtml = '';
+                if (restaurant.priceRange) {
+                    priceHtml = `<p class="price">Price: ${restaurant.priceRange}</p>`;
+                }
+                
+                let cuisineHtml = '';
+                if (restaurant.establishmentTypeAndCuisineTags) {
+                    const cuisines = restaurant.establishmentTypeAndCuisineTags.join(', ');
+                    cuisineHtml = `<p class="cuisine">${cuisines}</p>`;
+                }
+                
+                card.innerHTML = `
+                    ${imageHtml}
+                    <h3>${restaurant.name}</h3>
+                    ${ratingHtml}
+                    ${priceHtml}
+                    ${cuisineHtml}
+                    ${restaurant.distance ? `<p>Distance: ${restaurant.distance}</p>` : ''}
+                    ${restaurant.address ? `<p>Address: ${restaurant.address}</p>` : ''}
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Load restaurants when page loads
+        document.addEventListener('DOMContentLoaded', fetchRestaurants);
+    </script>
+</body>
+</html>
