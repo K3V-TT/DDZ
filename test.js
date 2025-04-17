@@ -1,20 +1,48 @@
+const dealsContainer = document.getElementById('deals');
+const searchBtn = document.getElementById('searchBtn');
+const searchInput = document.getElementById('searchInput');
 
-const fetch = require('node-fetch');
-
-const url = 'https://tripadvisor16.p.rapidapi.com/api/v1/restaurant/searchRestaurants?locationId=304554';
-const options = {
-  method: 'GET',
-  headers: {
-    'x-rapidapi-key': '4b34154c75msha7b904a0e8c010dp12510djsn96d217884c5d',
-    'x-rapidapi-host': 'tripadvisor16.p.rapidapi.com'
+function fetchDeals(title = '') {
+  let url = `https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15&pageSize=10`;
+  if (title) {
+    url += `&title=${encodeURIComponent(title)}&sortBy=price`;
   }
-};
 
-try {
-	const response = await fetch(url, options);
-	const result = await response.text();
-	console.log(result);
-} catch (error) {
-	console.error(error);
+  dealsContainer.innerHTML = 'Loading deals...';
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      dealsContainer.innerHTML = '';
+      if (data.length === 0) {
+        dealsContainer.innerHTML = '<p>No deals found.</p>';
+        return;
+      }
+
+      data.forEach(game => {
+        const div = document.createElement('div');
+        div.className = 'game';
+        div.innerHTML = `
+          <h3>${game.title}</h3>
+          <img src="${game.thumb}" alt="${game.title}">
+          <p>Normal Price: $${game.normalPrice}</p>
+          <p>Sale Price: <strong>$${game.salePrice}</strong></p>
+          <a href="https://www.cheapshark.com/redirect?dealID=${game.dealID}" target="_blank">View Deal</a>
+        `;
+        dealsContainer.appendChild(div);
+      });
+    })
+    .catch(error => {
+      dealsContainer.innerHTML = '<p>Failed to load deals.</p>';
+      console.error(error);
+    });
 }
 
+// Initial fetch
+fetchDeals();
+
+// Search button event
+searchBtn.addEventListener('click', () => {
+  const title = searchInput.value.trim();
+  fetchDeals(title);
+});
