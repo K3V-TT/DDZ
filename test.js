@@ -1,9 +1,10 @@
 const dealsContainer = document.getElementById('deals');
 const searchBtn = document.getElementById('searchBtn');
 const searchInput = document.getElementById('searchInput');
+const storeSelect = document.getElementById('storeSelect');
 
-function fetchDeals(title = '') {
-  let url = `https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15&pageSize=10`;
+function fetchDeals(title = '', storeID = '1') {
+  let url = `https://www.cheapshark.com/api/1.0/deals?storeID=${storeID}&upperPrice=15&pageSize=10`;
   if (title) {
     url += `&title=${encodeURIComponent(title)}&sortBy=price`;
   }
@@ -44,5 +45,6 @@ fetchDeals();
 // Search button event
 searchBtn.addEventListener('click', () => {
   const title = searchInput.value.trim();
-  fetchDeals(title);
+  const storeID = storeSelect.value;
+  fetchDeals(title, storeID);
 });
