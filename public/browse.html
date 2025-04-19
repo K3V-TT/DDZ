@@ -1,4 +1,4 @@
-<!-- index.html -->
+<!-- browse.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,14 @@
       <a href="bookmarks.html">Bookmarks</a>
     </nav>
   </header>
-  <main id="deal-list"></main>
-  <script src="js/main.js"></script>
+  <main>
+    <div id="filters">
+      <label>Min Price: <input type="number" id="minPrice" value="0"></label>
+      <label>Max Price: <input type="number" id="maxPrice" value="50"></label>
+      <button id="filterBtn">Apply Filters</button>
+    </div>
+    <div id="deal-list"></div>
+  </main>
+  <script src="js/browse.js"></script>
 </body>
 </html>
