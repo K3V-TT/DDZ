@@ -1,401 +1,328 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #000;
+/* Base Styles */
+:root {
+    --primary: #000000;
+    --secondary: #000000;
+    --accent: #3f3f3f;
+    --light: #fffbfb;
+    --dark: #625f5f;
+    --gray: #95a5a6;
+    --success: #80ffb5;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+  
+  * {
     margin: 0;
     padding: 0;
-    color: #e0e0e0;
-}
-
-header {
-    background: #565656;
-    background-image: linear-gradient(to bottom right, #535151, #000);
-    color: #fff;
-    padding: 10px 20px;
-    position: relative;
-    text-align: center;
-}
-
-.logo {
+    box-sizing: border-box;
+  }
+  
+  .logo {
     position: absolute;
-    left: 0px;
+    right: 0px;
     top: 50%;
     transform: translateY(-50%);
-    height: 117px;
+    height: 160px;
     width: auto;
 }
 
-.header-content {
-    display: inline-block;
-}
-
-.site-title {
-    font-size: 1.5em;
-    margin-bottom: 5px;
-}
-
-nav {
-    margin-top: 5px;
-}
-
-nav a {
-    margin: 0 10px;
-    color: #fff;
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: #6a6a6a;
+  }
+  
+  /* Header Styles */
+  header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 1.5rem 2rem;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-image: linear-gradient(to right, #000000, #1f1f1f);
+  }
+  
+  header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  
+  nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  nav a {
+    color: white;
     text-decoration: none;
-}
-
-main {
-    padding: 20px;
-}
-
-/* CAROUSEL STYLES */
-#game-carousel {
+    font-weight: 500;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: var(--transition);
+  }
+  
+  nav a:hover {
+    color: var(--light);
+  }
+  
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--light);
+    transition: var(--transition);
+  }
+  
+  nav a:hover::after {
+    width: 100%;
+  }
+  
+  /* Main Content */
+  main {
+    max-width: 1400px;
     margin: 2rem auto;
-    max-width: 1000px;
+    padding: 0 2rem;
+  }
+  
+  /* Carousel Styles */
+  #game-carousel {
+    margin-bottom: 3rem;
     position: relative;
-    background: #1a1a1a;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-.carousel {
-    position: relative;
-    height: 300px;
     overflow: hidden;
-    border-radius: 6px;
-}
-
-.carousel-track-container {
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+  }
+  
+  .carousel {
+    position: relative;
+    height: 350px;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+    border-radius: 10px;
+  }
+  
+  .carousel-track-container {
     height: 100%;
     position: relative;
     overflow: hidden;
-    background: #000;
-}
-
-.carousel-track {
+  }
+  
+  .carousel-track {
     padding: 0;
     margin: 0;
     list-style: none;
     position: relative;
     height: 100%;
-    transition: transform 0.5s ease;
-}
-
-.carousel-slide {
+    transition: transform 0.5s ease-in-out;
+    display: flex;
+  }
+  
+  .carousel-slide {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
-}
-
-.carousel-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  .carousel-image {
     width: 100%;
-    height: 250px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-    border: 2px solid #444;
-    box-sizing: border-box;
-}
-
-.carousel-image:hover {
-    transform: scale(1.03);
-}
-
-.carousel-title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.8);
-    color: #fff;
-    padding: 0.8rem;
+    max-height: 250px;
+    object-fit: contain;
+    border-radius: 5px;
+    transition: var(--transition);
+  }
+  
+  .carousel-slide a {
+    text-decoration: none;
+    color: white;
     text-align: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-}
-
-.carousel-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+  }
+  
+  .carousel-title {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .carousel-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255,255,255,0.2);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.3);
     border: none;
+    color: white;
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 0.5rem 1rem;
-    z-index: 10;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.carousel-button:hover {
-    background: rgba(255,255,255,0.4);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.carousel-button.prev {
+    z-index: 10;
+    transition: var(--transition);
+    backdrop-filter: blur(5px);
+  }
+  
+  .carousel-button:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+  
+  .carousel-button.prev {
     left: 1rem;
-}
-
-.carousel-button.next {
+  }
+  
+  .carousel-button.next {
     right: 1rem;
-}
-
-/* CENTERED GAME GRID LAYOUT */
-.game-grid {
+  }
+  
+  /* Deal List Grid */
+  #deal-list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(300px, 1fr)); /* 3 equal columns */
-    gap: 15px; /* Reduced gap for tighter spacing */
-    margin: 30px auto;
-    max-width: 1200px;
-    padding: 0 20px;
-    align-items: stretch; /* Stretch items to fill row height */
-}
-
-/* CENTERED GAME CARDS */
-.deal-card {
-    background: #1e1e1e;
-    border-radius: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .deal-card {
+    background: white;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
     display: flex;
     flex-direction: column;
-    border: 1px solid #333;
-    width: 100%;
-    max-width: 320px;
-}
-
-.game-image-container {
-    position: relative;
-    height: 200px;
-    overflow: hidden;
-    flex-shrink: 0; /* Prevent image area from shrinking */
-}
-.deal-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-    border: 2px solid #444;
-    box-sizing: border-box;
-}
-
-.deal-card:hover img {
-    transform: scale(1.05);
-}
-
-/* CENTERED CARD CONTENT */
-.game-content {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-}
-
-.game-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #fff;
-    margin: 0 0 8px 0;
+  }
+  
+  .deal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .deal-card h3 {
+    font-size: 1.2rem;
+    padding: 1rem 1rem 0.5rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
     line-height: 1.3;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  }
+  
+  .game-image {
     width: 100%;
-}
-
-.game-subtitle {
-    font-size: 0.9rem;
-    color: #aaa;
-    margin-bottom: 15px;
-    font-weight: 300;
-    width: 100%;
-}
-
-/* CENTERED PRICE INFO */
-.price-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 15px;
-    background: #252525;
-    padding: 12px;
-    border-radius: 8px;
-    width: 100%;
-}
-
-.price-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 8px;
-    width: 100%;
-}
-
-.price-label {
-    font-size: 0.8rem;
-    color: #aaa;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.price-value {
+    height: 150px;
+    object-fit: cover;
+    transition: var(--transition);
+  }
+  
+  .deal-card:hover .game-image {
+    transform: scale(1.03);
+  }
+  
+  .deal-card p {
+    padding: 0.3rem 1rem;
+    color: var(--dark);
+  }
+  
+  .deal-card p:nth-of-type(1) {
+    color: var(--gray);
+    text-decoration: line-through;
+  }
+  
+  .deal-card p:nth-of-type(2) {
+    font-weight: 600;
+    color: var(--accent);
     font-size: 1.1rem;
-    font-weight: 700;
-    color: #fff;
-}
-
-.savings-badge {
-    background: #28a745;
+  }
+  
+  .deal-card p:nth-of-type(3) {
+    color: var(--success);
+    font-weight: 500;
+  }
+  
+  .view-button {
+    display: inline-block;
+    background-color: var(--secondary);
     color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 700;
     text-align: center;
-    margin: 8px auto 0;
-}
-
-/* CENTERED BUTTONS */
-.button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
-    width: 100%;
-    align-items: center;
-}
-
-.view-button, .bookmark-button {
-    width: 80%;
-    padding: 12px 0;
-    margin: 0 auto;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: center;
+    padding: 0.7rem;
+    margin: 1rem;
+    border-radius: 5px;
     text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.view-button {
-    background: #007bff;
-    color: white;
-}
-
-.view-button:hover {
-    background: #0069d9;
-    transform: translateY(-2px);
-}
-
-.bookmark-button {
-    background: #333;
-    color: white;
-}
-
-.bookmark-button:hover {
-    background: #444;
-    transform: translateY(-2px);
-}
-
-/* FILTERS SECTION */
-#filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 1rem;
-    background-color: #2d2d2d;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-#filters label {
-    display: flex;
-    flex-direction: column;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #e0e0e0;
-}
-
-#filters input[type="number"] {
-    margin-top: 0.25rem;
-    padding: 0.4rem;
-    border: 1px solid #444;
-    border-radius: 5px;
-    width: 100px;
-    background: #1a1a1a;
-    color: #fff;
-}
-
-#filterBtn {
-    padding: 0.5rem 1rem;
-    background-color: #0077cc;
-    color: white;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+  
+  .view-button:hover {
+    background-color: var(--primary);
+  }
+  
+  .bookmark-button {
+    background-color: var(--light);
     border: none;
+    padding: 0.7rem;
+    margin: 0 1rem 1rem;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-#filterBtn:hover {
-    background-color: #005fa3;
-}
-
-/* SEARCH BAR */
-#searchInput {
-    width: 80%;
-    max-width: 600px;
-    padding: 12px 20px;
-    margin: 20px auto;
-    display: block;
-    border: 2px solid #444;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    background: #1a1a1a;
-    color: #fff;
-}
-
-#searchInput:focus {
-    border-color: #007BFF;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
-    outline: none;
-}
-
-.remove-button {
-    padding: 10px 0;
-    background-color: #dc3545;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+  
+  .bookmark-button:hover {
+    background-color: var(--gray);
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    width: 100%;
-    text-align: center;
-    transition: background-color 0.3s;
-    margin-top: 8px;
-}
-
-.remove-button:hover {
-    background-color: #c82333;
-}
-
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    header {
+      padding: 1rem;
+      text-align: center;
+    }
+    
+    nav {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .carousel {
+      height: 300px;
+    }
+    
+    #deal-list {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  }
+  
+  @media (max-width: 480px) {
+    main {
+      padding: 0 1rem;
+    }
+    
+    .carousel {
+      height: 250px;
+    }
+    
+    .carousel-title {
+      font-size: 1rem;
+    }
+    
+    #deal-list {
+      grid-template-columns: 1fr;
+    }
+  }
