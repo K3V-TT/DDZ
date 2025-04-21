@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('deal-list');
   const carouselContainer = document.getElementById('game-carousel');
   
-  fetch('https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating&pageSize=20')
+  fetch('https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating&pageSize=50')
       .then(res => res.json())
       .then(data => {
           const uniqueGames = new Map();

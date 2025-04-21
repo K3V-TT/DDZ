@@ -14,6 +14,8 @@
       <a href="browse.html">Browse</a>
       <a href="search.html">Search</a>
       <a href="bookmarks.html">Bookmarks</a>
+      <button class="open-modal-btn">Login</button> 
+
     </nav>
     <img src="ddzlogo2.png" alt="Logo" class="logo">
   </header>
@@ -22,6 +24,67 @@
     <div id="deal-list"></div>
   </main>
 
+  <!-- Auth Modal -->
+  <div class="modal" id="authModal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        
+        <div class="modal-header">
+            <h2 id="formTitle">Login</h2>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginEmail">Email or Username</label>
+                <input type="text" id="loginEmail" required>
+                <div class="error-message" id="loginEmailError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" required>
+                <div class="error-message" id="loginPasswordError"></div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Login</button>
+        </form>
+        
+        <form id="signupForm" style="display: none;">
+            <div class="form-group">
+                <label for="signupUsername">Username</label>
+                <input type="text" id="signupUsername" required>
+                <div class="error-message" id="signupUsernameError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" required>
+                <div class="error-message" id="signupEmailError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" required>
+                <div class="error-message" id="signupPasswordError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="signupConfirmPassword">Confirm Password</label>
+                <input type="password" id="signupConfirmPassword" required>
+                <div class="error-message" id="signupConfirmPasswordError"></div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Create Account</button>
+        </form>
+        
+        <div class="switch-form">
+            <span id="switchText">Don't have an account?</span>
+            <a id="switchLink">Sign up</a>
+        </div>
+    </div>
+</div>
+
   <script src="js/main.js"></script>
+  <script src="js/form.js"></script>
 </body>
 </html>
