@@ -1,3 +1,5 @@
+/*
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
@@ -65,9 +67,24 @@ signUp.addEventListener('click', (event)=>{
 const signIn=document.getElementById('submitSignIn');
 signIn.addEventListener('click', (event)=>{
    event.preventDefault();
-   const email=document.getElementById('email').value;
-   const password=document.getElementById('password').value;
+   const username=document.getElementById('username').value;
+   const password=document.getElementById('rPassword').value;
    const auth=getAuth();
+
+   const express = require('express');
+   const app = express();
+   app.use(express.urlencoded({ extended: true }));
+   
+   app.post('/signin', (req, res) => {
+       const { username, password } = req.body;
+       if (username && password) {
+           res.send('<script>alert("Sign In Successful"); window.location.href="/";</script>');
+       } else {
+           res.status(400).send('Missing fields');
+       }
+   });
+   
+   app.listen(3000, () => console.log('Server running on http://localhost:3000'));
 
    signInWithEmailAndPassword(auth, email,password)
    .then((userCredential)=>{
@@ -86,3 +103,10 @@ signIn.addEventListener('click', (event)=>{
        }
    })
 })
+
+*/
+
+document.getElementById("submitSignIn").addEventListener("click", function() {
+    alert("Login Successful");
+    window.location.href = "";
+});
