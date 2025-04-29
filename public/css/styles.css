@@ -428,150 +428,7 @@ main {
   to { opacity: 1; transform: translateY(0); }
 }
 
-
-.container{
-  background:#fff;
-  width:450px;
-  padding:1.5rem;
-  margin:50px auto;
-  border-radius:10px;
-  box-shadow:0 20px 35px rgba(0,0,1,0.9);
-}
-form{
-  margin:0 2rem;
-}
-.form-title{
-  font-size:1.5rem;
-  font-weight:bold;
-  text-align:center;
-  padding:1.3rem;
-  margin-bottom:0.4rem;
-}
-input{
-  color:inherit;
-  width:100%;
-  background-color:transparent;
-  border:none;
-  border-bottom:1px solid #757575;
-  padding-left:1.5rem;
-  font-size:15px;
-}
-.input-group{
-  padding:1% 0;
-  position:relative;
-
-}
-.input-group i{
-  position:absolute;
-  color:black;
-}
-input:focus{
-  background-color: transparent;
-  outline:transparent;
-  border-bottom:2px solid hsl(327,90%,28%);
-}
-input::placeholder{
-  color:transparent;
-}
-label{
-  color:#757575;
-  position:relative;
-  left:1.2em;
-  top:-1.3em;
-  cursor:auto;
-  transition:0.3s ease all;
-}
-input:focus~label,input:not(:placeholder-shown)~label{
-  top:-3em;
-  color:hsl(327,90%,28%);
-  font-size:15px;
-}
-.recover{
-  text-align:right;
-  font-size:1rem;
-  margin-bottom:1rem;
-
-}
-.recover a{
-  text-decoration:none;
-  color:black;
-}
-.recover a:hover{
-  color:blue;
-  text-decoration:underline;
-}
-button{
-  font-size:1.1rem;
-  padding:8px 0;
-  border-radius:5px;
-  outline:none;
-  border:none;
-  width:100%;
-  background:black;
-  color:white;
-  cursor:pointer;
-  transition:0.9s;
-}
-button:hover{
-  background:#07001f;
-}
-.or{
-  font-size:1.1rem;
-  margin-top:0.5rem;
-  text-align:center;
-}
-.icons{
-  text-align:center;
-}
-.icons i{
-  color:rgb(125,125,235);
-  padding:0.8rem 1.5rem;
-  border-radius:10px;
-  font-size:1.5rem;
-  cursor:pointer;
-  border:2px solid #dfe9f5;
-  margin:0 15px;
-  transition:1s;
-}
-.icons i:hover{
-  background:#07001f;
-  font-size:1.6rem;
-  border:2px solid rgb(125,125,235);
-}
-.links{
-  display:flex;
-  justify-content:space-around;
-  padding:0 4rem;
-  margin-top:0.9rem;
-  font-weight:bold;
-}
-#signUpButton, #signInButton{
-  color:black;
-  border:none;
-  background-color:transparent;
-  font-size:1rem;
-  font-weight:bold;
-}
-#signUpButton:hover, #signInButton:hover {
-  text-decoration:underline;
-  color:blue;
-} 
-.messageDiv{
-  background-color:hsl(327,90%,28%);
-  color:white;
-  padding:10px 20px;
-  margin:10px;
-  border-radius: 5px;
-  font-size:1rem;
-  opacity:0;
-  animation:fadeOut 7s forwards;
-
-}
-
-
-
-
-/* Container styles */
+/* Container Styles */
 .container {
   max-width: 1200px;
   margin: 2rem auto;
@@ -582,59 +439,60 @@ button:hover{
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 60vh;
+  min-height: 70vh;
 }
 
 .auth-box {
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
 }
 
-.auth-box h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #2c3e50;
+/* Form Styles */
+#auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-/* Form styles */
 .form-group {
-  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
+  font-weight: 600;
+  color: #2c3e50;
 }
 
 .form-group input {
-  width: 100%;
-  padding: 0.75rem;
+  padding: 0.8rem 1rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 1rem;
-  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
 .form-group input:focus {
   outline: none;
   border-color: #3498db;
-  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
-/* Button styles */
-button {
-  padding: 0.75rem 1.5rem;
+/* Button Styles */
+#login-submit, #signup-submit {
+  padding: 0.8rem 1.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  flex: 1;
 }
 
 #login-submit {
@@ -644,6 +502,7 @@ button {
 
 #login-submit:hover {
   background-color: #2980b9;
+  transform: translateY(-2px);
 }
 
 #signup-submit {
@@ -653,4 +512,5 @@ button {
 
 #signup-submit:hover {
   background-color: #27ae60;
+  transform: translateY(-2px);
 }

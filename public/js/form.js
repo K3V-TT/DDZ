@@ -1,112 +1,107 @@
 /*
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
-import{getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"
+import firebaseConfig from "./firebaseConfig.js"
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBLxERsk-s3AI23xg4dMOVW-7SqgUqraOk",
-  authDomain: "digital-deal-zone-153ee.firebaseapp.com",
-  projectId: "digital-deal-zone-153ee",
-  storageBucket: "digital-deal-zone-153ee.firebasestorage.app",
-  messagingSenderId: "522233837844",
-  appId: "1:522233837844:web:8a0368a3dfed1a47feaa01"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-function showMessage(message, divId){
-   var messageDiv=document.getElementById(divId);
-   messageDiv.style.display="block";
-   messageDiv.innerHTML=message;
-   messageDiv.style.opacity=1;
-   setTimeout(function(){
-       messageDiv.style.opacity=0;
-   },5000);
+const auth = getAuth(firebaseConfig.app)
+function isValidEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+function getData(){
+    let data = {
+        "email": document.getElementById("email").value,
+        "password": document.getElementById("password").value
+    };
+    if (isValidEmail(data.email)){
+        data.email = null;
+    }else{
+        data.email = data.email + "@gmail.com";
+    }
+    
+    if (!(data.email==null||data.password==null)){
+        console.log("Data Retrieved");
+    }else{
+        console.log("Data not Retrieved");
+    }
+    return data;
 }
-const signUp=document.getElementById('submitSignUp');
-signUp.addEventListener('click', (event)=>{
-   event.preventDefault();
-   const email=document.getElementById('rEmail').value;
-   const password=document.getElementById('rPassword').value;
-   const username=document.getElementById('username').value;
-
-   const auth=getAuth();
-   const db=getFirestore();
-
-   createUserWithEmailAndPassword(auth, email, password)
-   .then((userCredential)=>{
-       const user=userCredential.user;
-       const userData={
-           email: email,
-           username: username
-       };
-       showMessage('Account Created Successfully', 'signUpMessage');
-       const docRef=doc(db, "users", user.uid);
-       setDoc(docRef,userData)
-       .then(()=>{
-           window.location.href='index.html';
-       })
-       .catch((error)=>{
-           console.error("error writing document", error);
-       });
-   })
-   .catch((error)=>{
-       const errorCode=error.code;
-       if(errorCode=='auth/email-already-in-use'){
-           showMessage('Email Address Already Exists !!!', 'signUpMessage');
-       }
-       else{
-           showMessage('unable to create User', 'signUpMessage');
-       }
-   })
-});
-
-const signIn=document.getElementById('submitSignIn');
-signIn.addEventListener('click', (event)=>{
-   event.preventDefault();
-   const username=document.getElementById('username').value;
-   const password=document.getElementById('rPassword').value;
-   const auth=getAuth();
-
-   const express = require('express');
-   const app = express();
-   app.use(express.urlencoded({ extended: true }));
-   
-   app.post('/signin', (req, res) => {
-       const { username, password } = req.body;
-       if (username && password) {
-           res.send('<script>alert("Sign In Successful"); window.location.href="/";</script>');
-       } else {
-           res.status(400).send('Missing fields');
-       }
-   });
-   
-   app.listen(3000, () => console.log('Server running on http://localhost:3000'));
-
-   signInWithEmailAndPassword(auth, email,password)
-   .then((userCredential)=>{
-       showMessage('login is successful', 'signInMessage');
-       const user=userCredential.user;
-       localStorage.setItem('loggedInUserId', user.uid);
-       window.location.href='index.html';
-   })
-   .catch((error)=>{
-       const errorCode=error.code;
-       if(errorCode==='auth/invalid-credential'){
-           showMessage('Incorrect Email or Password', 'signInMessage');
-       }
-       else{
-           showMessage('Account does not Exist', 'signInMessage');
-       }
-   })
+let form_data = {
+    "email" : null,
+    "password": null
+}
+const login = document.getElementById("login-submit");
+login.addEventListener("click",function(event){
+    event.preventDefault();
+    form_data = getData();
+    signInWithEmailAndPassword(auth, form_data.email, form_data.password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        window.location.href = "./index.html"
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        niceError(errorCode);
+    });
 })
 
-*/
+const signup = document.getElementById("signup-submit");
+signup.addEventListener("click",function(event){
+    event.preventDefault();
+    form_data = getData();
+    console.log(form_data)
+    createUserWithEmailAndPassword(auth, form_data.email, form_data.password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        alert("Signed Up!")
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        niceError(errorCode);
+    });
+})
 
-document.getElementById("submitSignIn").addEventListener("click", function() {
-    alert("Login Successful");
-    window.location.href = "";
+
+function niceError(error_code){
+    const errorMap = {
+        // Common authentication errors
+        'auth/invalid-email': 'Please enter a valid username',
+        'auth/user-disabled': 'This account has been disabled. Please contact support.',
+        'auth/user-not-found': 'No account found with this username',
+        'auth/wrong-password': 'Incorrect password. Please try again.',
+        'auth/email-already-in-use': 'This username is already registered. Please use another username or login.',
+        'auth/operation-not-allowed': 'username/password login is currently disabled',
+        'auth/weak-password': 'Password should be at least 6 characters',
+        'auth/too-many-requests': 'Too many login attempts. Please try again later or reset your password.',
+        'auth/account-exists-with-different-credential': 'An account already exists with this username',
+        'auth/requires-recent-login': 'Please login again to perform this action',
+        'auth/credential-already-in-use': 'This credential is already associated with another account',
+        
+        // Password reset errors
+        'auth/expired-action-code': 'The reset link has expired',
+        'auth/invalid-action-code': 'The reset link is invalid',
+        'auth/user-mismatch': 'The credential does not match the current user',
+        
+        // Network errors
+        'auth/network-request-failed': 'Network error. Please check your internet connection.',
+        
+        // Timeout errors
+        'auth/timeout': 'Request timed out. Please try again.',
+        
+        // Other common errors
+        'auth/popup-closed-by-user': 'The login window was closed before completing',
+        'auth/unauthorized-domain': 'Login is not allowed from this domain',
+        'auth/cancelled-popup-request': 'Multiple login attempts detected',
+        'auth/popup-blocked': 'Login popup was blocked. Please allow popups for this site.'
+      };
+    
+      // Return the friendly message or a generic one if not found
+      alert(errorMap[error_code] || 'An unexpected error occurred. Please try again.');
+}
+console.log("Loaded")
+*/
+document.getElementById('auth-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    const username = document.getElementById('email').value;
+    alert(`Welcome ${username}`);
 });
